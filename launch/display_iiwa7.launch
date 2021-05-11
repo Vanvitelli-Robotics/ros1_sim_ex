@@ -1,0 +1,18 @@
+<launch>
+
+  <group ns="iiwa">
+
+  <arg name="model" default="$(find sun_iiwa_description)/urdf/iiwa7.urdf.xacro"/>
+  <arg name="rvizconfig" default="$(find sun_iiwa_description)/rviz/display_iiwa7.rviz" />
+
+  <param name="robot_description" command="xacro --inorder $(arg model)" />
+
+  <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui">
+  <rosparam param="source_list">["command/joint_states"]</rosparam>
+  </node>
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true"/>
+
+  </group>
+
+</launch>
